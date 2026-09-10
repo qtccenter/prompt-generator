@@ -1,25 +1,24 @@
 /* =============================================
    QTC Prompt Generator — Theme
-   Colors: Navy #1D2B4F | Teal #4ECDC4 | Cream #F5F0E1
    ============================================= */
 
 :root {
-    --navy:        #1D2B4F;
-    --navy-deep:   #141e38;
+    --navy:        #2a5fe5;
+    --navy-deep:   #152e71;
     --navy-mid:    #253563;
-    --teal:        #4ECDC4;
-    --teal-light:  #7EDDD6;
-    --teal-dark:   #2eb5ac;
-    --teal-glow:   rgba(78,205,196,.35);
-    --cream:       #F5F0E1;
-    --cream-dark:  #EDE7D0;
+    --teal:        #06c2b0;
+    --teal-light:  #ffffff;
+    --teal-dark:   #009688;
+    --teal-glow:   #4CAF50;
+    --cream:       #9C27B0;
+    --cream-dark:  #2038c1;
     --surface:     #FFFFFF;
     --surface-2:   #F8F9FC;
     --border:      #E2E8F0;
     --text:        #1D2B4F;
     --text-sec:    #4A5880;
     --text-muted:  #8A97B5;
-    --success:     #4ECDC4;
+    --success:     #4CAF50;
     --danger:      #FF6B6B;
     --warning:     #FFD93D;
     --radius:      14px;
@@ -28,7 +27,7 @@
     --shadow:      0 2px 8px rgba(29,43,79,.08);
     --shadow-md:   0 6px 20px rgba(29,43,79,.12);
     --shadow-lg:   0 16px 40px rgba(29,43,79,.18);
-    --shadow-teal: 0 8px 24px rgba(78,205,196,.3);
+    --shadow-teal: 0 8px 24px rgb(11 173 161 / 30%);
     --transition:  0.22s cubic-bezier(.4,0,.2,1);
 }
 
@@ -84,7 +83,7 @@ body {
    ============================================= */
 .header {
     background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-mid) 100%);
-    border-bottom: 2px solid rgba(78,205,196,.3);
+    border-bottom: 2px solid rgb(255 255 255);
     padding: 1rem 2rem;
     position: sticky;
     top: 0;
@@ -119,7 +118,7 @@ body {
     height: 58px;
     width: auto;
     object-fit: contain;
-    filter: drop-shadow(0 0 12px rgba(78,205,196,.5));
+    filter: drop-shadow(0 0 12px rgb(184 229 225 / 0%));
     transition: var(--transition);
     animation: logo-glow 3s ease-in-out infinite;
 }
