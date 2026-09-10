@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=cb67c15f-c06e-4b19-bd87-e666a4fb19bb
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="hosting-provider" content="Netlify">
+<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=cb67c15f-c06e-4b19-bd87-e666a4fb19bb">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noobitguy GAS WebApp Prompt Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Animated background particles -->
+        <div class="bg-particles" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+        </div>
+
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-img-wrap">
+                        <img src="logo.png" alt="Noobitguy Logo" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="logo-fallback" style="display:none">
+                            <span class="material-icons-round" style="font-size:2.2rem;color:#4ECDC4">auto_awesome</span>
+                        </div>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Noobitguy<span class="logo-accent"> GAS WebApp</span></h1>
+                        <p class="subtitle">Prompt Generator <span class="subtitle-dot">•</span> พัฒนา Web App ด้วย Google Apps Script</p>
+                    </div>
+                </div>
+                <div class="header-badge">
+                    <span class="material-icons-round">bolt</span> AI-Powered
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <!-- Step Indicator -->
+            <div class="steps-indicator">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <span class="step-label">ประเภทแอป</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <span class="step-label">แหล่งข้อมูล</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <span class="step-label">ฟีเจอร์</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <span class="step-label">UI & ธีม</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="5">
+                    <div class="step-number">5</div>
+                    <span class="step-label">รายละเอียด</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="6">
+                    <div class="step-number">6</div>
+                    <span class="step-label">สร้าง Prompt</span>
+                </div>
+            </div>
+
+            <!-- Step 1: App Type (Static) -->
+            <section class="step-content active" id="step-1">
+                <div class="section-header">
+                    <span class="material-icons-round section-icon">apps</span>
+                    <div>
+                        <h2>ประเภท Web App</h2>
+                        <p>เลือกประเภทของ Web App ที่ต้องการสร้าง</p>
+                    </div>
+                </div>
+                <div class="card-grid">
+                    <label class="option-card">
+                        <input type="radio" name="appType" value="dashboard">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">dashboard</span>
+                            <h3>Dashboard</h3>
+                            <p>แดชบอร์ดแสดงข้อมูลสรุป กราฟ และสถิติต่างๆ</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="appType" value="form">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">edit_note</span>
+                            <h3>Form บันทึกข้อมูล</h3>
+                            <p>ฟอร์มสำหรับกรอกและบันทึกข้อมูลลง Google Sheets</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="appType" value="display">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">table_view</span>
+                            <h3>แสดงข้อมูล (Read Only)</h3>
+                            <p>แสดงข้อมูลจาก Google Sheets ในรูปแบบตาราง</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="appType" value="crud">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">build_circle</span>
+                            <h3>CRUD (จัดการข้อมูลเต็มรูปแบบ)</h3>
+                            <p>สร้าง อ่าน แก้ไข ลบข้อมูลได้ครบถ้วน</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="appType" value="report">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">summarize</span>
+                            <h3>รายงาน / Report</h3>
+                            <p>สร้างรายงานจากข้อมูลพร้อม Export เป็น PDF/Excel</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="appType" value="approval">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">fact_check</span>
+                            <h3>ระบบอนุมัติ / Approval</h3>
+                            <p>ระบบขออนุมัติพร้อม workflow และการแจ้งเตือน</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="appType" value="inventory">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">inventory_2</span>
+                            <h3>ระบบสต็อก / Inventory</h3>
+                            <p>จัดการสินค้าคงคลัง เบิก-จ่าย สต็อก</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="appType" value="booking">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">event_available</span>
+                            <h3>ระบบจอง / Booking</h3>
+                            <p>จองห้องประชุม อุปกรณ์ หรือนัดหมาย</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="appType" value="attendance">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">fingerprint</span>
+                            <h3>ระบบลงเวลา / Attendance</h3>
+                            <p>ลงเวลาเข้า-ออกงาน Check-in/Check-out พนักงาน</p>
+                        </div>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Step 2: Dynamic Content -->
+            <section class="step-content" id="step-2">
+                <div id="step-2-content"></div>
+            </section>
+
+            <!-- Step 3: Dynamic Content -->
+            <section class="step-content" id="step-3">
+                <div id="step-3-content"></div>
+            </section>
+
+            <!-- Step 4: UI & Theme (Static) -->
+            <section class="step-content" id="step-4">
+                <div class="section-header">
+                    <span class="material-icons-round section-icon">palette</span>
+                    <div>
+                        <h2>หน้าตาและธีม</h2>
+                        <p>กำหนดรูปแบบ UI และธีมสีของ Web App</p>
+                    </div>
+                </div>
+
+                <h3 class="sub-heading">CSS Framework</h3>
+                <div class="card-grid small">
+                    <label class="option-card">
+                        <input type="radio" name="cssFramework" value="bootstrap" checked>
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">grid_view</span>
+                            <h3>Bootstrap 5</h3>
+                            <p>UI Framework ยอดนิยม ใช้ง่าย มี Component เยอะ</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="cssFramework" value="materialize">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">layers</span>
+                            <h3>Materialize CSS</h3>
+                            <p>Material Design ของ Google สวยงามทันสมัย</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="cssFramework" value="tailwind">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">style</span>
+                            <h3>Tailwind CSS (CDN)</h3>
+                            <p>Utility-first CSS ยืดหยุ่นสูง Customize ง่าย</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="cssFramework" value="custom">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">brush</span>
+                            <h3>Custom CSS</h3>
+                            <p>เขียน CSS เอง ไม่ใช้ Framework</p>
+                        </div>
+                    </label>
+                </div>
+
+                <h3 class="sub-heading">สไตล์ดีไซน์</h3>
+                <div class="card-grid small">
+                    <label class="option-card">
+                        <input type="radio" name="designStyle" value="minimal" checked>
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">space_dashboard</span>
+                            <h3>Minimal</h3>
+                            <p>เรียบง่าย พื้นที่ว่างเยอะ เน้นเนื้อหา</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="designStyle" value="modern">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">auto_awesome</span>
+                            <h3>Modern</h3>
+                            <p>ทันสมัย มีมิติ ใช้ Shadow และ Gradient</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="designStyle" value="corporate">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">business</span>
+                            <h3>Corporate</h3>
+                            <p>เป็นทางการ เหมาะกับระบบภายในองค์กร</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="designStyle" value="playful">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">palette</span>
+                            <h3>Playful</h3>
+                            <p>สนุกสนาน สีสันสดใส มีมุมโค้งมน</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="designStyle" value="glassmorphism">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">blur_on</span>
+                            <h3>Glassmorphism</h3>
+                            <p>เอฟเฟกต์กระจกฝ้า โปร่งแสง ดูหรูหรา</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="designStyle" value="flat">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">crop_square</span>
+                            <h3>Flat Design</h3>
+                            <p>แบนราบ สีทึบ ไม่มีเงา เน้นความชัดเจน</p>
+                        </div>
+                    </label>
+                </div>
+
+                <h3 class="sub-heading">โทนสี</h3>
+                <div class="color-grid">
+                    <label class="color-option">
+                        <input type="radio" name="colorTheme" value="blue" checked>
+                        <div class="color-swatch" style="background: linear-gradient(135deg, #1976D2, #42A5F5)"></div>
+                        <span>น้ำเงิน</span>
+                    </label>
+                    <label class="color-option">
+                        <input type="radio" name="colorTheme" value="green">
+                        <div class="color-swatch" style="background: linear-gradient(135deg, #2E7D32, #66BB6A)"></div>
+                        <span>เขียว</span>
+                    </label>
+                    <label class="color-option">
+                        <input type="radio" name="colorTheme" value="purple">
+                        <div class="color-swatch" style="background: linear-gradient(135deg, #7B1FA2, #AB47BC)"></div>
+                        <span>ม่วง</span>
+                    </label>
+                    <label class="color-option">
+                        <input type="radio" name="colorTheme" value="orange">
+                        <div class="color-swatch" style="background: linear-gradient(135deg, #E65100, #FF9800)"></div>
+                        <span>ส้ม</span>
+                    </label>
+                    <label class="color-option">
+                        <input type="radio" name="colorTheme" value="red">
+                        <div class="color-swatch" style="background: linear-gradient(135deg, #C62828, #EF5350)"></div>
+                        <span>แดง</span>
+                    </label>
+                    <label class="color-option">
+                        <input type="radio" name="colorTheme" value="teal">
+                        <div class="color-swatch" style="background: linear-gradient(135deg, #00695C, #26A69A)"></div>
+                        <span>เขียวอมฟ้า</span>
+                    </label>
+                    <label class="color-option">
+                        <input type="radio" name="colorTheme" value="dark">
+                        <div class="color-swatch" style="background: linear-gradient(135deg, #212121, #424242)"></div>
+                        <span>Dark Mode</span>
+                    </label>
+                    <label class="color-option">
+                        <input type="radio" name="colorTheme" value="custom">
+                        <div class="color-swatch" style="background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red)"></div>
+                        <span>เลือกเอง</span>
+                    </label>
+                </div>
+
+                <div id="custom-color-panel" class="custom-color-panel" style="display:none">
+                    <div class="form-row">
+                        <div class="form-group flex-1">
+                            <label class="form-label">สีหลัก (Primary)</label>
+                            <div class="color-input-row">
+                                <input type="color" id="customPrimary" class="form-color" value="#4F46E5">
+                                <input type="text" id="customPrimaryHex" class="form-input form-input-short" value="#4F46E5">
+                            </div>
+                        </div>
+                        <div class="form-group flex-1">
+                            <label class="form-label">สีรอง (Secondary)</label>
+                            <div class="color-input-row">
+                                <input type="color" id="customSecondary" class="form-color" value="#10B981">
+                                <input type="text" id="customSecondaryHex" class="form-input form-input-short" value="#10B981">
+                            </div>
+                        </div>
+                        <div class="form-group flex-1">
+                            <label class="form-label">สีพื้นหลัง (Background)</label>
+                            <div class="color-input-row">
+                                <input type="color" id="customBg" class="form-color" value="#F8FAFC">
+                                <input type="text" id="customBgHex" class="form-input form-input-short" value="#F8FAFC">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="sub-heading">Layout</h3>
+                <div class="card-grid small">
+                    <label class="option-card">
+                        <input type="radio" name="layout" value="sidebar" checked>
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">view_sidebar</span>
+                            <h3>Sidebar Navigation</h3>
+                            <p>เมนูด้านซ้าย เหมาะกับระบบที่มีหลายหน้า</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="layout" value="topnav">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">web</span>
+                            <h3>Top Navigation</h3>
+                            <p>เมนูด้านบน เรียบง่าย เหมาะกับหน้าจอเดียว</p>
+                        </div>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="layout" value="single">
+                        <div class="card-inner">
+                            <span class="material-icons-round card-icon">crop_portrait</span>
+                            <h3>Single Page</h3>
+                            <p>หน้าเดียวไม่มีเมนู เหมาะกับ Form หรือ Display อย่างเดียว</p>
+                        </div>
+                    </label>
+                </div>
+
+                <h3 class="sub-heading">Responsive</h3>
+                <div class="feature-grid">
+                    <label class="feature-item">
+                        <input type="checkbox" name="responsive" value="mobile" checked>
+                        <div class="feature-inner">
+                            <span class="material-icons-round">phone_android</span>
+                            <span>รองรับมือถือ (Mobile)</span>
+                        </div>
+                    </label>
+                    <label class="feature-item">
+                        <input type="checkbox" name="responsive" value="tablet">
+                        <div class="feature-inner">
+                            <span class="material-icons-round">tablet_android</span>
+                            <span>รองรับแท็บเล็ต</span>
+                        </div>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Step 5: Additional Details (Static) -->
+            <section class="step-content" id="step-5">
+                <div class="section-header">
+                    <span class="material-icons-round section-icon">settings</span>
+                    <div>
+                        <h2>รายละเอียดเพิ่มเติม</h2>
+                        <p>กำหนดรายละเอียดเพิ่มเติมสำหรับ Web App</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="material-icons-round">badge</span>
+                        ชื่อ Web App
+                    </label>
+                    <input type="text" id="appName" class="form-input" placeholder="เช่น ระบบจัดการพนักงาน, ระบบเบิกจ่ายวัสดุ">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="material-icons-round">description</span>
+                        คำอธิบาย Web App
+                    </label>
+                    <textarea id="appDescription" class="form-input textarea" rows="3" placeholder="อธิบายสั้นๆ ว่า Web App นี้ใช้ทำอะไร"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="material-icons-round">translate</span>
+                        ภาษาที่ใช้แสดงผล
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="language" value="th" checked>
+                            <span>ภาษาไทย</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="language" value="en">
+                            <span>English</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="language" value="both">
+                            <span>สองภาษา (TH/EN)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="material-icons-round">note_add</span>
+                        รายละเอียดเพิ่มเติม (Optional)
+                    </label>
+                    <textarea id="additionalNotes" class="form-input textarea" rows="4" placeholder="รายละเอียดหรือข้อกำหนดพิเศษอื่นๆ"></textarea>
+                </div>
+            </section>
+
+            <!-- Step 6: Generated Prompt (Static) -->
+            <section class="step-content" id="step-6">
+                <div class="section-header">
+                    <span class="material-icons-round section-icon">auto_awesome</span>
+                    <div>
+                        <h2>Prompt ที่สร้างแล้ว</h2>
+                        <p>คัดลอก Prompt นี้ไปใช้กับ AI (เช่น Claude, ChatGPT) เพื่อสร้าง Web App</p>
+                    </div>
+                </div>
+                <div class="prompt-output-container">
+                    <div class="prompt-toolbar">
+                        <span class="prompt-label"><span class="material-icons-round">terminal</span> Generated Prompt</span>
+                        <button class="btn-copy" onclick="copyPrompt()">
+                            <span class="material-icons-round">content_copy</span>
+                            คัดลอก Prompt
+                        </button>
+                    </div>
+                    <div id="prompt-output" class="prompt-output"></div>
+                </div>
+                <div class="prompt-actions">
+                    <button class="btn btn-secondary" onclick="goToStep(1)">
+                        <span class="material-icons-round">refresh</span>
+                        เริ่มใหม่
+                    </button>
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" id="btn-prev" onclick="prevStep()" style="display:none">
+                    <span class="material-icons-round">arrow_back</span>
+                    ย้อนกลับ
+                </button>
+                <div class="nav-spacer"></div>
+                <button class="btn btn-primary" id="btn-next" onclick="nextStep()">
+                    ถัดไป
+                    <span class="material-icons-round">arrow_forward</span>
+                </button>
+                <button class="btn btn-primary btn-generate" id="btn-generate" onclick="generatePrompt()" style="display:none">
+                    <span class="material-icons-round">auto_awesome</span>
+                    สร้าง Prompt
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Noobitguy GAS WebApp Prompt Generator &mdash; บริหารงานแบบคนไอที &copy; 2025</p>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast">
+        <span class="material-icons-round">check_circle</span>
+        คัดลอก Prompt แล้ว!
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
